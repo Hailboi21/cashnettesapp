@@ -6,8 +6,9 @@ from database import db, Demande
 app = Flask(__name__)
 # Utilisation d'une variable d'environnement pour la clé secrète (plus sécurisé)
 app.secret_key = os.environ.get('SECRET_KEY', 'votre_cle_secrete_par_defaut')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cashnettes.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Utilise le dossier /tmp pour la base de données, car Render ne permet d'écrire qu'ici
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join('/tmp', 'database.db'
 
 db.init_app(app)
 
