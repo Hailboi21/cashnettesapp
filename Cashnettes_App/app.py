@@ -10,7 +10,7 @@ db.init_app(app)
 SECTEUR_7 = ["saint-pierre", "boulevard st-joseph", "saint-jean","saint-damase","manseau","saint-alphonse","saint-frédéric","mélancon","mélançon","marchand","bruno","cockburn","surprenant","rajotte","savard","faucher","désilet","desilet","saint-antoine","saint-marc","saint-ambroise","villeneuve","saint-paul","saint-lucien","saint-marcel","saint-albert","sylvain","saint-alfred","turcotte","du drapeau","notre dame","notre-dame","ringuet","pelletier","ferland","chassé","mathieu","6e avenue","6eme avenue","7e avenue","7eme avenue","8e avenue","8eme avanue","9e avenue","9eme avanue"]
 
 def envoyer_discord(message):
-    webhook_url = "https://discord.com/api/webhooks/1515568361684078683/KHe3L5YkczRBB2liyZbCb5Gho-DQ8fWKmq1pgOEmgYLPjXNgr2NNGsHPdQKKUOpDzrkD"
+    webhook_url = "https://discord.com/api/webhooks/1515671283608850623/vFF_V_4o2DVysNCixpXJESxEPHcV708x-GF_ZdM1u38RPCW9u04_usXfvJeGSiZqXGVg"
     requests.post(webhook_url, json={"content": message})
 
 @app.route('/', methods=['GET', 'POST'])
