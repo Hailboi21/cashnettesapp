@@ -1,17 +1,23 @@
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, session
 from database import db, Client, Ticket, Message
 
 app = Flask(__name__)
 
 # =========================
-# ⚙️ CONFIG FLASK
+# ⚙️ CONFIG
 # =========================
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cashnettes.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'votre_cle_secrete'
 
 db.init_app(app)
+
+# =========================
+# 🔐 (BASE FUTUR LOGIN ADMIN)
+# =========================
+ADMIN_USER = "admin"
+ADMIN_PASS = "1234"
 
 # =========================
 # 🌍 SECTEUR AUTORISÉ
@@ -33,15 +39,15 @@ SECTEUR_7 = [
 ]
 
 # =========================
-# 🔔 DISCORD WEBHOOK
+# 🔔 DISCORD
 # =========================
 def envoyer_discord(message):
-    webhook_url = "https://discord.com/api/webhooks/1515671283608850623/vFF_V_4o2DVysNCixpXJESxEPHcV708x-GF_ZdM1u38RPCW9u04_usXfvJeGSiZqXGVg"
+    webhook_url = "https://discordapp.com/api/webhooks/1515671283608850623/vFF_V_4o2DVysNCixpXJESxEPHcV708x-GF_ZdM1u38RPCW9u04_usXfvJeGSiZqXGVg"
     requests.post(webhook_url, json={"content": message})
 
 
 # =========================
-# 🏠 PAGE CLIENT (FORMULAIRE)
+# 🏠 PAGE CLIENT
 # =========================
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -90,7 +96,7 @@ def index():
         db.session.add(message)
         db.session.commit()
 
-        # 🔔 discord
+        # 🔔 discord notif
         envoyer_discord(
             f"🚨 Nouveau Ticket Cashnettes\n"
             f"👤 {nom}\n"
@@ -101,7 +107,7 @@ def index():
             f"📝 {notes}"
         )
 
-        return "Merci ! Votre demande a été transmise."
+        return render_template("success.html")
 
     return render_template('index.html')
 
@@ -111,12 +117,13 @@ def index():
 # =========================
 @app.route('/dashboard')
 def dashboard():
+
     tickets = Ticket.query.order_by(Ticket.created_at.desc()).all()
     return render_template('dashboard.html', tickets=tickets)
 
 
 # =========================
-# 🎫 VOIR UN TICKET
+# 🎫 TICKET VIEW
 # =========================
 @app.route('/ticket/<int:ticket_id>')
 def view_ticket(ticket_id):
@@ -128,7 +135,7 @@ def view_ticket(ticket_id):
 
 
 # =========================
-# 💬 RÉPONSE ADMIN (CHAT)
+# 💬 RÉPONSE ADMIN
 # =========================
 @app.route('/ticket/<int:ticket_id>/reply', methods=['POST'])
 def reply_ticket(ticket_id):
@@ -152,11 +159,11 @@ def reply_ticket(ticket_id):
         f"💬 Réponse admin sur ticket #{ticket.id}:\n{content}"
     )
 
-    return "Réponse envoyée ! <a href='/dashboard'>Retour</a>"
+    return redirect(f"/ticket/{ticket.id}")
 
 
 # =========================
-# 🚀 RUN APP
+# 🚀 RUN
 # =========================
 if __name__ == '__main__':
 
