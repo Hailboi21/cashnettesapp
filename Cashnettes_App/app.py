@@ -27,7 +27,7 @@ db.init_app(app)
 # DISCORD
 # =========================
 
-WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
+WEBHOOK_URL = "https://discordapp.com/api/webhooks/1515671283608850623/vFF_V_4o2DVysNCixpXJESxEPHcV708x-GF_ZdM1u38RPCW9u04_usXfvJeGSiZqXGVg"
 
 def envoyer_discord(message):
 
