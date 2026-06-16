@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket</title>
+</head>
+<body>
+
+<h1>🎫 Ticket #{{ ticket.id }}</h1>
+
+<p><strong>Statut :</strong> {{ ticket.statut }}</p>
+<p><strong>Notes :</strong> {{ ticket.notes }}</p>
+
+<hr>
+
+<h2>💬 Messages</h2>
+
+{% for msg in messages %}
+    <p>
+        <strong>{{ msg.sender }} :</strong>
+        {{ msg.content }}
+    </p>
+{% endfor %}
+
+<hr>
+
+<h3>✍️ Répondre (admin)</h3>
+
+<form method="POST" action="/ticket/{{ ticket.id }}/reply">
+
+    <textarea name="message" required></textarea><br>
+
+    <button type="submit">Envoyer</button>
+
+</form>
+
+</body>
+</html>
