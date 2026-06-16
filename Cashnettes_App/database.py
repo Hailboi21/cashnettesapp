@@ -10,71 +10,142 @@ class Client(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    nom = db.Column(db.String(100), nullable=False)
-    adresse = db.Column(db.String(200))
+    nom = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
-    created_at = db.Column(db.DateTime, default=db.func.now())
+    adresse = db.Column(
+        db.String(200),
+        nullable=False
+    )
 
-    # relation automatique : client.tickets
-    tickets = db.relationship("Ticket", backref="client", lazy=True)
+    # Relation : un client possède plusieurs tickets
+    tickets = db.relationship(
+        "Ticket",
+        backref="client",
+        lazy=True,
+        cascade="all, delete-orphan"
+    )
 
+    def __repr__(self):
+        return f"<Client {self.nom}>"
 
 # =========================
-# 🎫 TICKET (remplace Demande)
+# 🎫 TICKET
 # =========================
 class Ticket(db.Model):
     __tablename__ = "ticket"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    client_id = db.Column(db.Integer, db.ForeignKey("client.id"), nullable=False)
+    client_id = db.Column(
+        db.Integer,
+        db.ForeignKey("client.id"),
+        nullable=False
+    )
 
-    sujet = db.Column(db.String(200))
-    statut = db.Column(db.String(50), default="open")  
-    # open / pending / closed
+    sujet = db.Column(
+        db.String(200),
+        default="Nouvelle demande"
+    )
 
-    emplacement = db.Column(db.String(200))
-    moment = db.Column(db.String(100))
-    acces = db.Column(db.String(200))
-    heure_limite = db.Column(db.String(50))
-    notes = db.Column(db.Text)
+    statut = db.Column(
+        db.String(50),
+        default="open"
+    )
 
-    created_at = db.Column(db.DateTime, default=db.func.now())
+    emplacement = db.Column(
+        db.String(200)
+    )
 
-    # relation automatique : ticket.messages
-    messages = db.relationship("Message", backref="ticket", lazy=True, cascade="all, delete-orphan")
+    moment = db.Column(
+        db.String(100)
+    )
 
+    acces = db.Column(
+        db.String(200)
+    )
+
+    heure_limite = db.Column(
+        db.String(50)
+    )
+
+    notes = db.Column(
+        db.Text
+    )
+
+    # Relation : un ticket possède plusieurs messages
+    messages = db.relationship(
+        "Message",
+        backref="ticket",
+        lazy=True,
+        cascade="all, delete-orphan"
+    )
+
+    def __repr__(self):
+        return f"<Ticket #{self.id}>"
 
 # =========================
-# 💬 MESSAGE (chat client/admin)
+# 💬 MESSAGE
 # =========================
 class Message(db.Model):
     __tablename__ = "message"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    ticket_id = db.Column(db.Integer, db.ForeignKey("ticket.id"), nullable=False)
+    ticket_id = db.Column(
+        db.Integer,
+        db.ForeignKey("ticket.id"),
+        nullable=False
+    )
 
-    sender = db.Column(db.String(50), nullable=False)
-    # "client" ou "admin"
+    sender = db.Column(
+        db.String(50),
+        nullable=False
+    )
+    # client / admin
 
-    content = db.Column(db.Text, nullable=False)
+    content = db.Column(
+        db.Text,
+        nullable=False
+    )
 
-    created_at = db.Column(db.DateTime, default=db.func.now())
-
+    def __repr__(self):
+        return f"<Message {self.id}>"
 
 # =========================
-# 📅 RENDEZ-VOUS (option CRM)
+# 📅 RENDEZ-VOUS
 # =========================
 class Appointment(db.Model):
     __tablename__ = "appointment"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    client_name = db.Column(db.String(100))
-    date = db.Column(db.String(100))
+    client_name = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
-    status = db.Column(db.String(50), default="requested")
+    date = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    status = db.Column(
+        db.String(50),
+        default="requested"
+    )
     # requested / accepted / rejected
 
-    created_at = db.Column(db.DateTime, default=db.func.now())
+    def __repr__(self):
+        return f"<Appointment {self.client_name}>"

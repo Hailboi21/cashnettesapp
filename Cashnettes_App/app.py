@@ -27,7 +27,7 @@ db.init_app(app)
 # DISCORD
 # =========================
 
-WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK")
+WEBHOOK_URL = os.getenv("https://discordapp.com/api/webhooks/1515671283608850623/vFF_V_4o2DVysNCixpXJESxEPHcV708x-GF_ZdM1u38RPCW9u04_usXfvJeGSiZqXGVg")
 
 def envoyer_discord(message):
 
@@ -126,10 +126,16 @@ def start():
 
         # Client
 
-        client = Client(
+        client = Client.query.filter_by(
             nom=nom,
             adresse=adresse
-        )
+        ).first()
+
+        if not client:
+         client = Client(
+        nom=nom,
+        adresse=adresse
+    )
 
         db.session.add(client)
         db.session.flush()
@@ -188,7 +194,7 @@ def dashboard():
 
     tickets = (
         Ticket.query
-        .order_by(Ticket.created_at.desc())
+        .order_by(Ticket.id.desc())
         .all()
     )
 
@@ -281,13 +287,16 @@ def reply_ticket(ticket_id):
 # RUN
 # =========================
 
+import os
+
 if __name__ == "__main__":
 
     with app.app_context():
         db.create_all()
 
+    port = int(os.environ.get("PORT", 10000))
+
     app.run(
-        host="127.0.0.1",
-        port=8080,
-        debug=True
+        host="0.0.0.0",
+        port=port
     )
