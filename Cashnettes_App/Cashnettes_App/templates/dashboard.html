@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Cashnettes</title>
+</head>
+<body>
+
+<h1>📊 Dashboard Admin</h1>
+
+<p>Liste des tickets clients :</p>
+
+{% for ticket in tickets %}
+
+<div style="border:1px solid black; padding:10px; margin:10px;">
+    
+    <h3>🎫 Ticket #{{ ticket.id }}</h3>
+
+    <p><strong>Client ID :</strong> {{ ticket.client_id }}</p>
+    <p><strong>Sujet :</strong> {{ ticket.sujet }}</p>
+    <p><strong>Statut :</strong> {{ ticket.statut }}</p>
+    <p><strong>Adresse :</strong> {{ ticket.emplacement }}</p>
+    <p><strong>Notes :</strong> {{ ticket.notes }}</p>
+
+    <a href="/ticket/{{ ticket.id }}">➡️ Ouvrir le ticket</a>
+
+</div>
+
+{% endfor %}
+
+</body>
+</html>
