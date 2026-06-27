@@ -35,24 +35,22 @@ def envoyer_discord(message):
 # SECTEUR DESSERVI (CORRIGÉ)
 # =========================
 SECTEUR_E = [
-    "saint-pierre", "boulevard st-joseph", "saint-jean", "saint-damase", "manseau",
-    "saint-alphonse", "saint-frédéric", "mélancon", "mélançon", "marchand",
-    "bruno", "cockburn", "surprenant", "rajotte", "savard", "faucher",
-    "désilet", "desilet", "saint-antoine", "saint-marc", "saint-ambroise",
-    "villeneuve", "saint-paul", "saint-lucien", "saint-marcel", "saint-albert",
-    "sylvain", "saint-alfred", "turcotte", "du drapeau", "notre dame",
-    "notre-dame", "ringuet", "pelletier", "ferland", "chassé", "mathieu",
+    "rue saint-pierre", "boulevard st-joseph", "rue saint-jean", "rue saint-damase", "rue manseau",
+    "rue saint-alphonse", "rue saint-frédéric", "rue mélançon", "rue marchand",
+    "rue bruno", "rue cockburn", "rue surprenant", "rue rajotte", "rue savard", "rue faucher",
+    "rue désilet","rue saint-antoine", "rue saint-marc", "rue saint-ambroise",
+    "rue villeneuve", "rue saint-paul", "rue saint-lucien", "rue saint-marcel", "rue saint-albert",
+    "rue sylvain", "rue saint-alfred", "rue turcotte", "rue du drapeau",
+    "rue notre-dame", "rue ringuet", "rue pelletier", "rue ferland", "rue chassé", "rue mathieu",
     "6e avenue", "7e avenue", "8e avenue", "9e avenue", "10e avenue", "11e avenue",
     "12e avenue", "13e avenue", "14e avenue", "15e avenue", "16e avenue", "17e avenue",
     "18e avenue", "19e avenue", "20e avenue", "21e avenue", "22e avenue",
-    "6eme avenue", "7eme avenue", "8eme avenue", "9eme avenue", "10eme avenue", "11eme avenue",
-    "12eme avenue", "13eme avenue", "14eme avenue", "15eme avenue", "16eme avenue", "17eme avenue",
-    "18eme avenue", "19eme avenue", "20eme avenue", "21eme avenue", "22eme avenue",
-    "bernabé", "croteau", "lauzière", "milette", "saint-eusebes", "st-eusebes", "st-eusèbes", "saint-eusèbes",
-    "celanese", "du velours", "camille dreyfus", "du satin", "biron", "gendron", "gill", "raphaelle-nolet",
-    "raphaelle nolet", "paillé", "jaques-desautels", "mauchon", "beaudoins", "dumaine", "bessette", "fortin",
-    "oscar-thiffault", "precourt", "précourt", "desjardins", "lalemant", "goupil", "jogues", "jean de lalande",
-    "saint-thomas", "saint thomas", "saint-edgar", "saint edgar", "étoffe", "écrue", "denier", "navette"
+    "rue bernabé", "rue croteau", "rue lauzière", "rue milette","rue saint-eusèbes",
+    "rue celanese", "rue du velours", "rue camille dreyfus", "rue du satin", "rue biron", "rue gendron", "rue gill",
+    "rue raphaelle-nolet","rue paillé", "rue jaques-desautels", "rue mauchon", "rue beaudoins", "rue dumaine",
+    "rue bessette", "rue fortin","rue oscar-thiffault", "rue precourt", "rue desjardins", "rue lalemant", "goupil",
+    "rue jogues", "rue jean de lalande", "rue saint-thomas", "rue saint-edgar", "rue de l'étoffe", "rue de l'écru",
+    "rue du denier", "rue de la navette"
 ]
 
 # =========================
