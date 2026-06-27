@@ -67,15 +67,23 @@ def welcome():
 def start():
     if request.method == "POST":
         nom = request.form.get("nom")
-        adresse = request.form.get("adresse", "").lower()
+        
+        # Récupération séparée
+        unite = request.form.get("unite", "").strip()
+        rue = request.form.get("rue", "").lower()
+        
+        # On reconstitue l'adresse complète pour la base de données
+        adresse = f"{unite} {rue}"
+        
         emplacement = request.form.get("emplacement")
         moment = request.form.get("moment")
         acces = request.form.get("acces")
         heure_limite = request.form.get("heure_limite")
         notes = request.form.get("notes")
 
-        if adresse not in SECTEUR_E:
-            return render_template("error.html", message="Désolé, nous ne desservons pas encore votre secteur.")
+        # Vérification sur la rue choisie dans le menu
+        if rue not in SECTEUR_E:
+            return render_template("error.html", message="Désolé, cette rue n'est pas desservie.")
 
         client = Client.query.filter_by(nom=nom, adresse=adresse).first()
         if not client:
