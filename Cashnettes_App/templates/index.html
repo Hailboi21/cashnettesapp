@@ -37,7 +37,7 @@
             margin-bottom: 20px;
         }
 
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             margin-bottom: 12px;
             padding: 12px;
@@ -47,6 +47,12 @@
             color: white;
             box-sizing: border-box;
             outline: none;
+        }
+
+        /* Style spécifique pour le menu déroulant */
+        select {
+            cursor: pointer;
+            appearance: none;
         }
 
         textarea {
@@ -98,27 +104,24 @@
 
 <body>
 
-    <!-- =========================
-         FORMULAIRE CLIENT
-    ========================== -->
     <form method="POST">
-
         <h1>Cashnettes</h1>
-
         <p class="hint">
             Remplissez toutes les informations pour accélérer le traitement de votre demande.
         </p>
 
         <input type="text" name="nom" placeholder="Votre nom" required>
 
-        <input type="text" name="adresse" placeholder="Adresse (ex: Rue Saint-Pierre)" required>
+        <select name="adresse" id="adresse" required>
+            <option value="" disabled selected>-- Sélectionnez votre adresse --</option>
+            {% for secteur in secteurs %}
+                <option value="{{ secteur }}">{{ secteur|title }}</option>
+            {% endfor %}
+        </select>
 
         <input type="text" name="emplacement" placeholder="Emplacement précis" required>
-
         <input type="text" name="moment" placeholder="Moment souhaité (ex: Samedi 10h)" required>
-
         <input type="text" name="acces" placeholder="Accès (code porte / info)" required>
-
         <input type="text" name="heure_limite" placeholder="Heure limite" required>
 
         <textarea name="notes" placeholder="Notes complémentaires (optionnel)"></textarea>
@@ -128,25 +131,14 @@
         <div class="footer-note">
             Service réservé au Secteur E uniquement.
         </div>
-
     </form>
 
-    <!-- =========================
-         CARTE + INFO
-    ========================== -->
     <div class="map-container">
-
-        <img src="{{ url_for('static', filename='carte_secteur.png') }}"
-             alt="Zone de service"
-             class="map-image">
-
+        <img src="{{ url_for('static', filename='carte_secteur.png') }}" alt="Zone de service" class="map-image">
         <p class="info-text">
-            <strong>Zone actuelle de service .</strong><br><br>
-
-            Nous desservons uniquement les adresses situées dans cette zone géographique.<br>
-            Une expansion vers de nouveaux secteurs est prévue prochainement.
+            <strong>Zone actuelle de service.</strong><br><br>
+            Nous desservons uniquement les adresses situées dans cette zone géographique.
         </p>
-
     </div>
 
 </body>
