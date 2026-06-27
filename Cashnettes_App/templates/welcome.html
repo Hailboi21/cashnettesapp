@@ -1,190 +1,260 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cashnettes</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cashnettes</title>
 
-```
 <style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    body{
-        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background:#126e3a;
-        min-height:100vh;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        padding:40px 20px;
-        color:white;
-    }
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#126e3a;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px 20px;
+    color:white;
 
-    .container{
-        max-width:950px;
-        width:100%;
-    }
+    /* ===== AJOUT FADE ===== */
+    opacity:0;
+    transition:opacity 1.4s ease-in-out;
+}
 
-    .card{
-        background:#232b28;
-        border-radius:25px;
-        padding:50px;
-        box-shadow:0 15px 40px rgba(0,0,0,.35);
-        position:relative;
-        overflow:hidden;
-    }
+body.loaded{
+    opacity:1;
+}
 
-    .card::before{
-        content:"";
-        position:absolute;
-        right:-80px;
-        top:50px;
-        width:350px;
-        height:350px;
-        background:url("{{ url_for('static', filename='logo_cashnettes.png') }}");
-        background-repeat:no-repeat;
-        background-size:contain;
-        opacity:0.05;
-        pointer-events:none;
-    }
+/* ======================= */
 
-    .logo{
-        display:block;
-        width:180px;
-        max-width:35%;
-        margin:0 auto 20px auto;
-    }
+.container{
+    max-width:950px;
+    width:100%;
+}
 
-    h1{
-        text-align:center;
-        font-size:3rem;
-        margin-bottom:10px;
-    }
+.card{
+    background:#232b28;
+    border-radius:25px;
+    padding:50px;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+    position:relative;
+    overflow:hidden;
+}
 
-    .subtitle{
-        text-align:center;
-        color:#35d18c;
-        font-size:1.4rem;
-        margin-bottom:35px;
-    }
+.card::before{
+    content:"";
+    position:absolute;
+    right:-80px;
+    top:50px;
+    width:350px;
+    height:350px;
+    background:url("{{ url_for('static', filename='logo_cashnettes.png') }}");
+    background-repeat:no-repeat;
+    background-size:contain;
+    opacity:0.05;
+    pointer-events:none;
+}
 
-    .intro{
-        text-align:center;
-        line-height:1.8;
-        color:#e2e2e2;
-        font-size:1.1rem;
-        margin-bottom:40px;
-    }
+.logo {
+    display: block;
+    width: 180px;
+    max-width: 35%;
+    aspect-ratio: 1 / 1;     
+    border-radius: 50%;      
+    object-fit: cover;       
+    margin: 0 auto 20px auto;
+}
 
-    .separator{
-        border-top:1px solid rgba(255,255,255,.08);
-        margin:35px 0;
-    }
+h1{
+    text-align:center;
+    font-size:3rem;
+    margin-bottom:10px;
+}
 
-    .grid{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:40px;
-    }
+.subtitle{
+    text-align:center;
+    color:#126e3a;
+    font-size:1.4rem;
+    margin-bottom:35px;
+}
 
-    .section h2{
-        color:#35d18c;
-        margin-bottom:15px;
-    }
+.intro{
+    text-align:center;
+    line-height:1.8;
+    color:#e2e2e2;
+    font-size:1.1rem;
+    margin-bottom:40px;
+}
 
-    .section ul{
-        padding-left:20px;
-        line-height:2;
-    }
+.separator{
+    border-top:1px solid rgba(255,255,255,.08);
+    margin:35px 0;
+}
 
-    .impact{
-        margin-top:35px;
-        padding-top:35px;
-        border-top:1px solid rgba(255,255,255,.08);
-    }
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+}
 
-    .impact h2{
-        color:#35d18c;
-        margin-bottom:15px;
-    }
+.section h2{
+    color:#126e3a;
+    margin-bottom:15px;
+}
 
-    .impact p{
-        line-height:1.8;
-    }
+.section ul{
+    padding-left:20px;
+    line-height:2;
+}
 
-    .donation{
-        margin-top:15px;
-        color:#ffd54a;
-        font-weight:bold;
-        font-size:1.1rem;
-    }
+.impact{
+    margin-top:35px;
+    padding-top:35px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
 
-    .cta{
-        text-align:center;
-        margin-top:40px;
-    }
+.impact h2{
+    color:#126e3a;
+    margin-bottom:15px;
+}
 
-    .btn{
-        display:inline-block;
-        text-decoration:none;
-        background:#7289da;
-        color:white;
-        padding:18px 35px;
-        border-radius:12px;
-        font-size:1.1rem;
-        font-weight:bold;
-        transition:.2s;
-    }
+.impact p{
+    line-height:1.8;
+}
 
-    .btn:hover{
-        background:#5b6eae;
-        transform:translateY(-2px);
-    }
+.donation{
+    margin-top:15px;
+    color:#126e3a;
+    font-weight:bold;
+    font-size:1.1rem;
+}
 
-    .footer{
-        text-align:center;
-        margin-top:25px;
-        opacity:.7;
-        font-size:.9rem;
-    }
+.cta{
+    text-align:center;
+    margin-top:40px;
+}
 
-    @media(max-width:768px){
+.btn{
+    display:inline-block;
+    text-decoration:none;
+    background:#7289da;
+    color:white;
+    padding:18px 35px;
+    border-radius:12px;
+    font-size:1.1rem;
+    font-weight:bold;
+}
 
-        .card{
-            padding:30px;
-        }
+.footer{
+    text-align:center;
+    margin-top:25px;
+    opacity:.7;
+    font-size:.9rem;
+}
 
-        .grid{
-            grid-template-columns:1fr;
-        }
+/* =========================
+CHAT BUTTON (AJOUT UNIQUEMENT)
+========================= */
 
-        h1{
-            font-size:2.2rem;
-        }
+.chat-button{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:65px;
+    height:65px;
+    border:none;
+    border-radius:50%;
+    background:#7289da;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+    transition:.2s;
+}
 
-        .logo{
-            width:140px;
-        }
+.chat-button:hover{
+    transform:scale(1.05);
+}
 
-        .card::before{
-            display:none;
-        }
-    }
+/* CHAT WINDOW */
+.chat-window{
+    position:fixed;
+    bottom:100px;
+    right:25px;
+    width:320px;
+    height:420px;
+    background:#232b28;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+}
+
+.chat-header{
+    background:#7289da;
+    padding:10px;
+    font-weight:bold;
+    display:flex;
+    justify-content:space-between;
+}
+
+.chat-body{
+    flex:1;
+    padding:10px;
+    overflow-y:auto;
+    font-size:0.9rem;
+}
+
+.chat-input{
+    display:flex;
+    border-top:1px solid #444;
+}
+
+.chat-input input{
+    flex:1;
+    padding:10px;
+    border:none;
+    outline:none;
+}
+
+.chat-input button{
+    background:#7289da;
+    border:none;
+    color:white;
+    padding:10px 15px;
+    cursor:pointer;
+}
+
+.msg{
+    margin-bottom:10px;
+    padding:8px 10px;
+    border-radius:10px;
+    max-width:80%;
+}
+
+.bot{
+    background:#3a3f44;
+}
+
+.user{
+    background:#126e3a;
+    color:#232b28;
+    margin-left:auto;
+}
 </style>
-```
-
 </head>
 
 <body>
 
 <div class="container">
 
-```
 <div class="card">
 
     <img
@@ -262,13 +332,107 @@
     </div>
 
     <div class="footer">
-        Service actuellement offert dans les secteurs desservis par Cashnettes.
+        Service actuellement offert dans les secteurs  (district E).
     </div>
 
 </div>
-```
+</div>
+
+<!-- CHAT BUTTON -->
+<button class="chat-button" onclick="toggleChat()">💬</button>
+
+<!-- CHAT WINDOW -->
+<div class="chat-window" id="chatWindow">
+
+<div class="chat-header">
+Assistant cashnettes
+<span onclick="toggleChat()">✖</span>
+</div>
+
+<div class="chat-body" id="chatBody">
+<div class="msg bot">Bonjour 👋 Comment puis-je vous aider ?</div>
+</div>
+
+<div class="chat-input">
+<input id="userInput" placeholder="Écrire...">
+<button onclick="sendMessage()">→</button>
+</div>
 
 </div>
+
+<script>
+function toggleChat(){
+    const chat = document.getElementById("chatWindow");
+    chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+}
+
+function sendMessage(){
+    const input = document.getElementById("userInput");
+    const text = input.value.trim();
+    if(!text) return;
+
+    const chatBody = document.getElementById("chatBody");
+
+    chatBody.innerHTML += `<div class="msg user">${text}</div>`;
+
+    const msg = text.toLowerCase();
+
+    let response = "";
+    let actions = "";
+
+    const isPrice = msg.includes("prix") || msg.includes("tarif") || msg.includes("coût") || msg.includes("estimations");
+    const isHow = msg.includes("utilisé") || msg.includes("fonctionne")|| msg.includes("utilise");
+    const isSector = msg.includes("secteur") || msg.includes("où") || msg.includes("adresse")|| msg.includes("emplacement");
+    const isPay = msg.includes("payer") || msg.includes("paiement");
+    const isContact = msg.includes("téléphone") || msg.includes("contact")|| msg.includes("vous joindre")|| msg.includes("facebook");
+
+    if(isPrice){
+        response = "Il n'y as aucun cout de déplacment , une commissions de 5$ est versé par tranche de 20$";
+        actions = `<button onclick="window.location.href='/start'">💰 Demander un prix</button>`;
+    }
+    else if(isHow){
+        response = "Vous remplissez une demande, puis nous planifions l’intervention rapidement.";
+        actions = `<button onclick="window.location.href='/start'">📋 Faire une demande</button>`;
+    }
+    else if(isSector){
+        response = "Entrez votre adresse dans le formulaire pour vérifier votre secteur.";
+        actions = `<button onclick="window.location.href='/start'">📍 Vérifier mon secteur</button>`;
+    }
+    else if(isPay){
+        response = "Le commissions serons versé  a la demande , nous ferrons le calcul enssemble et on vous donne votre argent! ";
+        actions = `<button onclick="window.location.href='/start'">💳 Commander</button>`;
+    }
+    else if(isContact){
+        response = "Vous pouvez nous contacter directement via le formulaire, ou par notre page facebook ";
+        actions = `<button onclick="window.location.href='/start'">📞 Nous contacter</button>`;
+    }
+    else {
+        response = "Je peux vous aider avec les prix, le fonctionnement ou votre secteur.";
+        actions = `<button onclick="window.location.href='/start'">🚀 Faire une demande</button>`;
+    }
+
+    chatBody.innerHTML += `
+        <div class="msg bot">
+            ${response}<br><br>
+            ${actions}
+        </div>
+    `;
+
+    input.value = "";
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+document.getElementById("userInput").addEventListener("keypress", function(e){
+    if(e.key === "Enter"){
+        sendMessage();
+    }
+});
+
+/* ===== FADE IN AJOUTÉ ===== */
+window.addEventListener("load", () => {
+    document.body.classList.add("loaded");
+});
+</script>
 
 </body>
 </html>
