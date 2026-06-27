@@ -34,7 +34,7 @@ def envoyer_discord(message):
 # =========================
 # SECTEUR DESSERVI
 # =========================
-SECTEUR_7 = [
+SECTEUR_E = [
     "saint-pierre", "boulevard st-joseph", "saint-jean", "saint-damase", "manseau",
     "saint-alphonse", "saint-frédéric", "mélancon", "mélançon", "marchand",
     "bruno", "cockburn", "surprenant", "rajotte", "savard", "faucher",
@@ -42,7 +42,17 @@ SECTEUR_7 = [
     "villeneuve", "saint-paul", "saint-lucien", "saint-marcel", "saint-albert",
     "sylvain", "saint-alfred", "turcotte", "du drapeau", "notre dame",
     "notre-dame", "ringuet", "pelletier", "ferland", "chassé", "mathieu",
-    "6e avenue", "7e avenue", "8e avenue", "9e avenue"
+    "6e avenue", "7e avenue", "8e avenue", "9e avenue", "10e avenue", "11e avenue",
+    "12e avenue", "13e aveneue", "14e avenue","15e avenue", "16e avenue", "17e avenue"
+    "18e avenue","19e avenue", "20e avenue", "21e avenue", "22e avenue"
+    "6eme avenue", "7eme avenue", "8eme avenue", "9eme avenue", "10eme avenue", "11eme avenue",
+    "12eme avenue", "13eme aveneue", "14eme avenue","15eme avenue", "16eme avenue", "17eme avenue"
+    "18eme avenue","19eme avenue", "20eme avenue", "21eme avenue", "22eme avenue"
+    "bernabé", "croteau","lauzière","milette","saint-eusebes","st-eusebes","st-eusèbes","saint-eusèbes",
+    "celanese","du velours","camille dreyfus","du satin","biron","gendron","gill","raphaelle-nolet",
+    "raphaelle nolet","paillé","jaques-desautels","mauchon","beaudoins","dumaine","bessette","fortin",
+    "oscar-thiffault","precourt","précourt","desjardins","lalemant","goupil","jogues","jean de lalande"
+    "saint-thomas","saint thomas","saint-edgar","saint edgar","étoffe","écrue","denier","navette",
 ]
 
 # =========================
@@ -64,7 +74,7 @@ def start():
         heure_limite = request.form.get("heure_limite")
         notes = request.form.get("notes")
 
-        if not any(rue in adresse for rue in SECTEUR_7):
+        if not any(rue in adresse for rue in SECTEUR_E):
             return render_template("error.html", message="Désolé, nous ne desservons pas encore votre secteur.")
 
         client = Client.query.filter_by(nom=nom, adresse=adresse).first()
